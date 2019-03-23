@@ -11,6 +11,24 @@ found_links = set()
 crawled_links = set()
 
 
+def check_response(url):
+
+	#Check url is valid and returns a http response
+
+	response = requests.get(url)
+
+	print(url, 'HTTP response is ', response.status_code, 'site is crawlable, continuing')
+
+	if response.status_code != 200:
+		print('Target site is not returning a 200 response code, please check the url')
+	else:
+		#Create a copy of our starting domain to check all internal links against later
+		#and parse to get just the hostname
+		starting_page = urlparse(url)
+
+		crawl_bot(starting_page, url)
+
+
 def crawl_bot(starting_page, url):
 
 
@@ -34,7 +52,7 @@ def crawl_bot(starting_page, url):
 	#Create a new array consisting of found links that havent been crawled yet
 	links_intersect = { i for i in found_links if i in crawled_links}
 
-	print('The links intersect is ', links_intersect)
+	print('The current links intersect is ', links_intersect)
 
 	for item in found_links:
 		print(item)
@@ -42,8 +60,11 @@ def crawl_bot(starting_page, url):
 		if item not in links_intersect:
 			#Check if target hostname is in the link and if so crawl it next
 			if starting_page.hostname in item: 
-				time.sleep(6)
-				crawl_bot(starting_page, item)
+				print("Writing ", item, " to file")
+				with open('links-file', 'a') as f:
+					f.write("%s, \n" % item)
+					time.sleep(6)
+					crawl_bot(starting_page, item)
 
 def main():
 	parser = argparse.ArgumentParser()
@@ -52,12 +73,8 @@ def main():
 
 	url = args.url
 
-	#Create a coopy of our starting domain to check all internal links against later
-	#and parse to get just the hostname
-	starting_page = urlparse(url)
 
-
-	crawl_bot(starting_page, url)
+	check_response(url)
 
 if __name__ == '__main__':
 	main()
