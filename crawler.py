@@ -45,8 +45,8 @@ def crawl_bot(starting_page, url):
 	soup = BeautifulSoup(html, "html.parser")
 
 	links = {link['href'] for link in soup.select("a[href]")}
-	for l in links:
-		print(l)
+	#for l in links:
+		#print(l)
 	found_links.update(links) 
 
 	#Create a new array consisting of found links that havent been crawled yet
@@ -54,8 +54,9 @@ def crawl_bot(starting_page, url):
 
 	print('The current links intersect is ', links_intersect)
 
+
 	for item in found_links:
-		print(item)
+		#print(item)
 		#Has the current link been crawled before? 
 		if item not in links_intersect:
 			#Check if target hostname is in the link and if so crawl it next
@@ -63,7 +64,7 @@ def crawl_bot(starting_page, url):
 				print("Writing ", item, " to file")
 				with open('links-file', 'a') as f:
 					f.write("%s, \n" % item)
-					time.sleep(6)
+					time.sleep(3)
 					crawl_bot(starting_page, item)
 
 def main():

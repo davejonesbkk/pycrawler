@@ -27,9 +27,11 @@ python crawler.py http://yourwebsite.com
 
  - Checking for both relative and full path internal links
 
+ - Test that each page can resolve *before* crawling it
+
  - Use threads to simultaneously crawl many pages
 
- - Using multiprocessing with Threadpool 
+ - Using multiprocessing with Threadpool to also speed up crawling
 
  - User agents, waits and ip proxying to avoid being blocked
 
