@@ -16,5 +16,28 @@ Please install all the pip requirements as so:
 ```
 pip install -r requirements.txt
 ```
+To run the program:
+
+```
+python crawler.py http://yourwebsite.com
+```
+
+
+<h3>How to improve further</h3>
+
+ - Checking for both relative and full path internal links
+
+ - Use threads to simultaneously crawl many pages
+
+ - Using multiprocessing with Threadpool 
+
+ - User agents, waits and ip proxying to avoid being blocked
+
+ 
+
+
+
+
+
 
 
